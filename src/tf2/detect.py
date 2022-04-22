@@ -9,10 +9,13 @@ import glob
 import matplotlib.pyplot as plt
 import cv2
 import time
+import sys
 
-from tf2.object_detection.utils import ops as utils_ops
-from tf2.object_detection.utils import label_map_util
-from tf2.object_detection.utils import visualization_utils as vis_util
+sys.path.insert(0, 'tf2/object_detection')
+
+from object_detection.utils import ops as utils_ops
+from object_detection.utils import label_map_util
+from object_detection.utils import visualization_utils as vis_util
 from com_ineuron_utils.utils import encodeImageIntoBase64
 
 # patch tf1 into `utils.ops`
