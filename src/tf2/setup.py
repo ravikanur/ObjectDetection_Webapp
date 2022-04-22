@@ -38,6 +38,7 @@ setup(
         'preprocessing': os.path.join('slim', 'preprocessing'),
         'deployment': os.path.join('slim', 'deployment'),
         'scripts': os.path.join('slim', 'scripts'),
+
     },
     description='Tensorflow Object Detection Library',
     python_requires='>3.6',

@@ -1,3 +1,3 @@
 import sys
 
-sys.path.insert(0, "yolo")
+sys.path.insert(0, "src/yolo")
