@@ -14,7 +14,7 @@ from com_ineuron_utils.utils import encodeImageIntoBase64
 import sys
 #sys.path.insert(0, 'com_ineuron_apparel/predictor_yolo_detector')
 
-from yolo.predictor_yolo_detector.models.experimental import attempt_load
+from predictor_yolo_detector.models.experimental import attempt_load
 from predictor_yolo_detector.utils.datasets import LoadStreams, LoadImages
 from predictor_yolo_detector.utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
