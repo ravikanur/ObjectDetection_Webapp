@@ -1,3 +1,3 @@
 import sys
 
-sys.path.append('src/tf2/object_detection')
+sys.path.append('tf2/object_detection')
