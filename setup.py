@@ -51,7 +51,7 @@ REQUIRED_PACKAGES = [
 
 setup(
     name='alphadetector',
-    version='0.0.11',
+    version='0.0.11a',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
