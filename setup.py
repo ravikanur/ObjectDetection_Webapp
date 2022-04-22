@@ -44,7 +44,9 @@ REQUIRED_PACKAGES = [
     'fvcore',
     'cloudpickle',
     'pandas',
-    'seaborn'
+    'seaborn',
+    'torch==1.8.2+cpu @ https://download.pytorch.org/whl/lts/1.8/torch_lts.html',
+    'torchvision==0.9.2+cpu',
 ]
 
 setup(
@@ -57,12 +59,6 @@ setup(
         'Bug Tracker': 'https://github.com/ravikanur/ObjectDetection_Webapp/issues',
     },
     install_requires=REQUIRED_PACKAGES,
-    extras_require={
-            # optional dependencies, required by some features
-            "torch": [
-                "torch==1.8.2+cpu",
-                "torchvision==0.9.2+cpu @ https://download.pytorch.org/whl/lts/1.8/torch_lts.html",
-            ]},
     include_package_data=True,
     packages=find_packages(),
     python_requires='>3.6',
