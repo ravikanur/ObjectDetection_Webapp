@@ -51,7 +51,7 @@ REQUIRED_PACKAGES = [
 
 setup(
     name='ytd',
-    version='0.0.1',
+    version='0.0.2',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
@@ -61,6 +61,6 @@ setup(
     install_requires=REQUIRED_PACKAGES,
     include_package_data=True,
     dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
-    packages=find_packages(),
-    python_requires='>3.6',
+    packages=find_packages(where='src'),
+    python_requires='>3.7',
 )
