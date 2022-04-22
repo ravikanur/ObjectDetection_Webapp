@@ -45,7 +45,7 @@ REQUIRED_PACKAGES = [
     'cloudpickle',
     'pandas',
     'seaborn',
-    'torch==1.8.2+cpu @ https://download.pytorch.org/whl/lts/1.8/torch_lts.html',
+    'torch==1.8.2+cpu',
     'torchvision==0.9.2+cpu',
 ]
 
@@ -60,6 +60,7 @@ setup(
     },
     install_requires=REQUIRED_PACKAGES,
     include_package_data=True,
+    dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
     packages=find_packages(),
     python_requires='>3.6',
 )
