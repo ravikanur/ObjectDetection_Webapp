@@ -62,5 +62,6 @@ setup(
     include_package_data=True,
     dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
     packages=find_packages(where='src'),
+    package_dir={"":'src'},
     python_requires='>3.7',
 )
