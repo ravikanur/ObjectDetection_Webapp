@@ -27,7 +27,7 @@ tf.gfile = tf.io.gfile
 
 class Predictor:
     def __init__(self, filename, model_name):
-        self.PATH_TO_LABELS = os.getcwd() + '/tf2/object_detection/data/mscoco_label_map.pbtxt'
+        self.PATH_TO_LABELS = self.download_labels('mscoco_label_map.pbtxt')
         self.category_index = label_map_util.create_category_index_from_labelmap(self.PATH_TO_LABELS,
                                                                                  use_display_name=True)
         self.filename = filename
@@ -63,6 +63,14 @@ class Predictor:
                                             origin=base_url + model_date + '/' + model_file,
                                             untar=True)
         return str(model_dir)
+
+    def download_labels(self, filename):
+        base_url = 'https://raw.githubusercontent.com/tensorflow/models/master/research/object_detection/data/'
+        label_dir = tf.keras.utils.get_file(fname=filename,
+                                            origin=base_url + filename,
+                                            untar=False)
+        label_dir = pathlib.Path(label_dir)
+        return str(label_dir)
 
     def load_image_into_numpy_array(self, path):
         img_data = tf.io.gfile.GFile(path, 'rb').read()
