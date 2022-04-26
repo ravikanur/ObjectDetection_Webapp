@@ -1,5 +1,5 @@
-#from src.detectron2.ObjectDetector import Detector
-#from src.yolo.detector_test import Detector as Detector_yolo
+from src.detectron2.ObjectDetector import Detector
+from src.yolo.detector_test import Detector as Detector_yolo
 from src.tf2.detect import Predictor
 from flask import Flask, render_template, request, Response, jsonify
 import os
@@ -47,10 +47,9 @@ def predictRoute():
             result = object_detector.run_inference()
 
         elif framework == 'detectron2':
-            object_detector = Predictor(clApp.filename, model)
-            result = object_detector.run_inference()
-            #object_detector = Detector(clApp.filename, model)
-            #result = object_detector.inference()
+            #print(model)
+            object_detector = Detector(clApp.filename, model)
+            result = object_detector.inference()
 
         elif framework == 'yolov5':
             object_detector = Predictor(clApp.filename, model)

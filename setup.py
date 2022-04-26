@@ -15,6 +15,7 @@ REQUIRED_PACKAGES = [
     'google-pasta>=0.1.7',
     'grpcio>=1.24.1',
     'h5py>=2.10.0',
+    'requests',
     'itsdangerous>=1.1.0',
     'Jinja2>=2.10.3',
     'Keras-Applications>=1.0.8',
@@ -49,9 +50,10 @@ REQUIRED_PACKAGES = [
     'torchvision==0.9.2+cpu',
 ]
 
+files = ['*.yaml', 'detectron2/model_zoo/configs/*']
 setup(
     name='alphadetector',
-    version='0.0.15',
+    version='0.0.16',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
@@ -63,5 +65,6 @@ setup(
     dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
     package_dir={"":'src'},
     packages=find_packages(where='src'),
+    package_data={'detectron2':files},
     python_requires='>=3.7',
 )

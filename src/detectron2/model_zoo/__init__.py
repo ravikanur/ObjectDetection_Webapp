@@ -6,5 +6,5 @@ and optionally load their pre-trained weights.
 """
 
 from .model_zoo import get, get_config_file, get_checkpoint_url, get_config
-
+print('entered model_zoo.py')
 __all__ = ["get_checkpoint_url", "get", "get_config_file", "get_config"]
