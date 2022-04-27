@@ -103,6 +103,7 @@ setup(
     dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
     package_dir={"": 'src'},
     packages=find_packages(where='src'),
-    package_data={'detectron2.model_zoo': ['configs/*.yaml']},
+    package_data={'detectron2.model_zoo': ['configs/*.yaml', 'configs/COCO-Detection/*yaml',
+                                           'configs/COCO-Detection/*py']},
     python_requires='>=3.7',
 )
