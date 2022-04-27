@@ -91,7 +91,7 @@ REQUIRED_PACKAGES = [
 files = ['*.yaml','detectron2/model_zoo/configs/*']
 setup(
     name='alphadetector',
-    version='0.0.17',
+    version='0.0.18',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
@@ -102,7 +102,7 @@ setup(
     include_package_data=True,
     dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
     package_dir={"": 'src'},
-    packages=find_packages(where='src', exclude= 'tests*'),
+    packages=find_packages(where='src'),
     package_data={'detectron2.model_zoo': ['configs/*.yaml']},
     python_requires='>=3.7',
 )

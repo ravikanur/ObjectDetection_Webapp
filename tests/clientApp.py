@@ -1,10 +1,11 @@
-from src.detectron2.ObjectDetector import Detector
+from detectron2.ObjectDetector import Detector
 from src.yolo.detector_test import Detector as Detector_yolo
-from src.tf2.detect import Predictor
+from tf2.detect import Predictor
 from flask import Flask, render_template, request, Response, jsonify
 import os
 from flask_cors import CORS, cross_origin
 from src.com_ineuron_utils.utils import decodeImage
+
 
 app = Flask(__name__)
 
@@ -42,6 +43,8 @@ def predictRoute():
         framework = request.json['framework']
         model = request.json['model']
         decodeImage(image, clApp.filename)
+        #clr = get_model_zoo_configs
+        #print('clr:', clr)
         if framework == 'tf2':
             object_detector = Predictor(clApp.filename, model)
             result = object_detector.run_inference()
