@@ -2,7 +2,7 @@ import cv2 as cv
 import json
 import time
 import sys
-sys.path.insert(0, 'src')
+#sys.path.insert(0, 'src')
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2.utils.visualizer import Visualizer

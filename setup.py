@@ -1,11 +1,49 @@
 """Setup script for object_detection with TF2.0."""
-import os
+from os import path
 from setuptools import find_packages
 from setuptools import setup
+from glob import glob
+from typing import List
+import shutil
+
+
+def get_model_zoo_configs() -> List[str]:
+    """
+    Return a list of configs to include in package for model zoo. Copy over these configs inside
+    detectron2/model_zoo.
+    """
+
+    # Use absolute paths while symlinking.
+    source_configs_dir = path.join(path.dirname(path.realpath(__file__)), "configs")
+    destination = path.join(
+        path.dirname(path.realpath(__file__)), "detectron2", "model_zoo", "configs"
+    )
+    # Symlink the config directory inside package to have a cleaner pip install.
+
+    # Remove stale symlink/directory from a previous build.
+    if path.exists(source_configs_dir):
+        if path.islink(destination):
+            path.unlink(destination)
+        elif path.isdir(destination):
+            shutil.rmtree(destination)
+
+    if not path.exists(destination):
+        try:
+            path.symlink(source_configs_dir, destination)
+        except OSError:
+            # Fall back to copying if symlink fails: ex. on Windows.
+            shutil.copytree(source_configs_dir, destination)
+
+    config_paths = glob.glob("configs/**/*.yaml", recursive=True) + glob.glob(
+        "configs/**/*.py", recursive=True
+    )
+    return config_paths
 
 # Note: adding apache-beam to required packages causes conflict with
 # tf-models-offical requirements. These packages request for incompatible
 # oauth2client package.
+
+
 REQUIRED_PACKAGES = [
     # Required for apache-beam with PY3
     'absl-py>=0.8.1',
@@ -50,10 +88,10 @@ REQUIRED_PACKAGES = [
     'torchvision==0.9.2+cpu',
 ]
 
-files = ['*.yaml', 'detectron2/model_zoo/configs/*']
+files = ['*.yaml','detectron2/model_zoo/configs/*']
 setup(
     name='alphadetector',
-    version='0.0.16',
+    version='0.0.17',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
@@ -63,8 +101,8 @@ setup(
     install_requires=REQUIRED_PACKAGES,
     include_package_data=True,
     dependency_links=['https://download.pytorch.org/whl/lts/1.8/torch_lts.html'],
-    package_dir={"":'src'},
-    packages=find_packages(where='src'),
-    package_data={'detectron2':files},
+    package_dir={"": 'src'},
+    packages=find_packages(where='src', exclude= 'tests*'),
+    package_data={'detectron2.model_zoo': ['configs/*.yaml']},
     python_requires='>=3.7',
 )
