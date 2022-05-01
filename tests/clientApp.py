@@ -9,8 +9,6 @@ from src.com_ineuron_utils.utils import decodeImage
 
 app = Flask(__name__)
 
-#detector = Detector(filename="file.jpg")
-
 RENDER_FACTOR = 35
 
 os.putenv('LANG', 'en_US.UTF-8')
@@ -23,10 +21,6 @@ CORS(app)
 class ClientApp:
     def __init__(self):
         self.filename = "inputImage.jpg"
-        # modelPath = 'research/ssd_mobilenet_v1_coco_2017_11_17'
-        # self.objectDetection_detectron = Detector(self.filename)
-        # self.objectDetection_yolo = Detector(self.filename)
-        # self.objectDetection_tf2 = Predictor(self.filename, )
 
 
 @app.route("/")
@@ -43,35 +37,29 @@ def predictRoute():
         framework = request.json['framework']
         model = request.json['model']
         decodeImage(image, clApp.filename)
-        #clr = get_model_zoo_configs
-        #print('clr:', clr)
         if framework == 'tf2':
             object_detector = Predictor(clApp.filename, model)
             result = object_detector.run_inference()
 
         elif framework == 'detectron2':
-            #print(model)
             object_detector = Detector(clApp.filename, model)
             result = object_detector.inference()
 
         elif framework == 'yolov5':
             object_detector = Predictor(clApp.filename, model)
             result = object_detector.run_inference()
-            #object_detector = Detector_yolo(clApp.filename, model)
-            #result = object_detector.detect_action()
 
         else:
             result = 'Unknown framework'
-        #result = clApp.objectDetection.inference('file.jpg', 'Right')
 
     except ValueError as val:
         print(val)
-        return Response("Value not found inside  json data")
+        return Response(val)
     except KeyError:
         return Response("Key value error incorrect key passed")
     except Exception as e:
         print(e)
-        result = "Invalid input"
+        result = 'Invalid input'
     return jsonify(result)
 
 
