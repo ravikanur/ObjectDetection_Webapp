@@ -91,7 +91,7 @@ REQUIRED_PACKAGES = [
 files = ['*.yaml','detectron2/model_zoo/configs/*']
 setup(
     name='alphadetector',
-    version='0.0.19',
+    version='0.0.20',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
