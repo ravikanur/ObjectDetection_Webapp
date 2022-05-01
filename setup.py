@@ -84,14 +84,14 @@ REQUIRED_PACKAGES = [
     'cloudpickle',
     'pandas',
     'seaborn',
-    'torch==1.8.2+cpu',
-    'torchvision==0.9.2+cpu',
+    'torch>=1.7.0'
+    'torchvision>=0.8.1'
 ]
 
 files = ['*.yaml','detectron2/model_zoo/configs/*']
 setup(
     name='alphadetector',
-    version='0.0.20',
+    version='0.0.21',
     author='ravikanur',
     url='https://github.com/ravikanur/ObjectDetection_Webapp',
     description='object detection using yolo, tf2 and detectron2',
