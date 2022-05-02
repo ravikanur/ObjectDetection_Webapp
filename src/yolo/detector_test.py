@@ -177,7 +177,6 @@ class Detector():
                 # Print time (inference + NMS)
                 print('%sDone. (%.3fs)' % (s, t2 - t1))
 
-
                 if save_img:
                     if dataset.mode == 'images':
 

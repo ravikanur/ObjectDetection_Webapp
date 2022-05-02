@@ -31,8 +31,6 @@ class Detector:
 		# self.cfg.merge_from_file("config.yml")
 		if model_name == 'faster_rcnn_R_50_C4':
 			print(f'model:faster_rcnn_R_50_C4')
-			# if not os.path.exists('model_final_721ade.pkl'):
-				# download_file_from_google_drive('1txn_iQ2wN4mrHqhj4U66bQCBLxVZXKvK', 'faster_rcnn_R_50_C4_model_final.pkl')
 			self.model = 'faster_rcnn_R_50_C4_1x.yaml'
 			self.cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/" + self.model))
 			self.cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/" + self.model)
@@ -62,7 +60,7 @@ class Detector:
 			self.cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/" + self.model)
 
 		else:
-			raise Exception('Unknown model')
+			raise ValueError
 
 		# set device to cpu
 		self.cfg.MODEL.DEVICE = "cpu"
