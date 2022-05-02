@@ -9,8 +9,8 @@ import random
 import cv2
 import numpy as np
 
-from app.predictor_yolo.utils.general import LOGGER, check_version, colorstr, resample_segments, segment2box
-from app.predictor_yolo.utils.metrics import bbox_ioa
+from predictor_yolo.utils.general import LOGGER, check_version, colorstr, resample_segments, segment2box
+from predictor_yolo.utils.metrics import bbox_ioa
 
 
 class Albumentations:
