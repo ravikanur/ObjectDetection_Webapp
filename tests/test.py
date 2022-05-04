@@ -4,7 +4,7 @@ from setuptools import find_packages
 from setuptools import setup
 import glob
 from typing import List
-import shutil
+import logging
 import tqdm
 import cv2
 import tempfile
@@ -23,7 +23,10 @@ from detectron2.engine.defaults import DefaultPredictor
 from predictor_yolo_detector.utils.general import (check_img_size, non_max_suppression, 
                                                 scale_coords, plot_one_box)
 
-
+log_str = "[%(asctime)s: %(levelname)s: %(module)s] %(message)s"
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+logging.basicConfig(filename=os.path.join(log_dir, "test_log.log"), level=logging.INFO, format=log_str, datefmt='%Y:%m:%d %H:%M:%S')
 
 class Test:
     def __init__(self):
@@ -50,6 +53,8 @@ class Test:
         self.line_thickness = 3
         self.yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
 
+        
+
 
         '''def get_model_zoo_configs(self) -> List[str]:
             """
@@ -62,13 +67,13 @@ class Test:
             destination = path.join(
                 path.dirname(path.realpath(__file__)), "detectron2", "model_zoo", "configs"
             )
-            print('src:', source_configs_dir)
-            print('dest:', destination)
+            logging.info('src:', source_configs_dir)
+            logging.info('dest:', destination)
             # Symlink the config directory inside package to have a cleaner pip install.
 
             # Remove stale symlink/directory from a previous build.
             if path.exists(source_configs_dir):
-                print('In first if')
+                logging.info('In first if')
                 if path.islink(destination):
                     path.unlink(destination)
                 elif path.isdir(destination):
@@ -76,7 +81,7 @@ class Test:
 
             if not path.exists(destination):
                 try:
-                    print('in try block')
+                    logging.info('in try block')
                     path.symlink(source_configs_dir, destination)
                 except OSError:
                     # Fall back to copying if symlink fails: ex. on Windows.
@@ -88,7 +93,7 @@ class Test:
             config_paths = glob.glob("configs/**/*.yaml", recursive=True) + glob.glob(
                 "configs/**/*.py", recursive=True
             )
-            print(config_paths)
+            logging.info(config_paths)
             return config_paths'''
 
     def test_opencv_video_format(self, codec, file_ext):
@@ -154,14 +159,14 @@ class Test:
         height = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
         frames_per_second = video.get(cv2.CAP_PROP_FPS)
         num_frames = video.get(cv2.CAP_PROP_FRAME_COUNT)
-        print('num of frames:', num_frames)
-        print('frame_height, frame_width:', width, height)
+        logging.info('num of frames:', num_frames)
+        logging.info('frame_height, frame_width:', width, height)
 
         # codec, file_ext = (('x264', '.mkv') if self.test_opencv_video_format('x264', '.mkv') else ('.mp4v', '.mp4'))
         codec, file_ext = ('mp4v', '.mp4')
         base_name = 'pred_' + os.path.basename(video_path)
         output_fname = os.path.splitext(base_name)[0] + file_ext
-        print('name:', output_fname)
+        logging.info('name:', output_fname)
 
         output_file = cv2.VideoWriter(
             filename=output_fname,
@@ -174,7 +179,7 @@ class Test:
         )
         frame_gen = self._frame_from_video(video)
 
-        #print('frame_gen:', len(frame_gen))
+        logging.info(f'frame_gen:{len(frame_gen)}')
 
         for frame in tqdm.tqdm(frame_gen, total = num_frames):
             output = self.detectron2_predictor(frame)
@@ -212,10 +217,10 @@ class Test:
         for frame in tqdm.tqdm(frame_gen, total=num_frames):
             framesz = list((int(height), int(width)))
             framesz = [check_img_size(x, s=stride) for x in framesz]
-            #print('pt:',pt)
-            print('framesz:', framesz)
-            print('frame type:', type(frame))
-            print('frame shape:', frame.shape)
+            logging.info(f'pt:{pt}')
+            logging.info('framesz:', framesz)
+            logging.info('frame type:', type(frame))
+            logging.info('frame shape:', frame.shape)
             frame0 = self.letterbox(img=frame, new_shape=framesz, auto=pt)[0]
             frame0 = torch.from_numpy(frame0).to(self.device)
             frame0 = frame0.float()
@@ -223,7 +228,7 @@ class Test:
             if frame0.ndimension() == 3:
                 frame0 = frame0.unsqueeze(0)
             frame0 = frame0.permute(0,3,1,2)
-            print('frame0 shape:', frame0.shape)
+            logging.info('frame0 shape:', frame0.shape)
 
             pred = self.yolo_model(frame0, augment=self.augment)
             pred = non_max_suppression(pred, self.conf_thres, self.iou_thres,
@@ -244,17 +249,16 @@ class Test:
         output_file.release()
         video.release()
 
-
-            
-
-
-
+    def log_statements(self):
+        logging.info(f"model:{self.model}")
+        logging.info(f"img:{self.view_img}")
 
 
 if __name__ == "__main__":
     tst = Test()
     #data = {"detectron2.model_zoo": tst.get_model_zoo_configs()}
-    #print(data)
+    #logging.info(data)
     #tst.pred_video('video1.mp4')
-    tst.yolo_pred_video('video1.mp4')
+    #tst.yolo_pred_video('video1.mp4')
+    tst.log_statements()
 
